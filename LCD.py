@@ -35,7 +35,7 @@ class LCD:
     """
 
     def __init__(self, sda_pin, scl_pin,
-                 display_address=None, rows=4, cols=20):
+                 display_address=None, rows=4, cols=20, i2c_peripheral=1):
         """
         sda_pin, scl_pin: Pin objects for the I2C interface,
             ex. Pin(14), Pin(15)
@@ -43,8 +43,9 @@ class LCD:
             Usual value is 0x27.
         If not provided, it will be attempted to get
             the device address automatically.
+        i2c_peripheral: id of the i2c peripheral, default = 1
         """
-        self.__i2c = I2C(1, sda=sda_pin, scl=scl_pin)
+        self.__i2c = I2C(i2c_peripheral, sda=sda_pin, scl=scl_pin)
         if display_address is None:
             devices = self.__i2c.scan()
             if len(devices) == 0:
